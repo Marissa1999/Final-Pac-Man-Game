@@ -1,0 +1,188 @@
+<canvas id="pmGame" style="border: solid black 1px;"></canvas>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+var canvasColor = "blue";
+var canvas = document.getElementById("pmGame");
+canvas.width = 790;
+canvas.height = 490;
+canvas.style = "background: " + canvasColor;
+var ctx = canvas.getContext("2d");
+var border = 20;
+var cellSize = 10;
+
+var pacman = {
+    posX: border,
+    posY: border,
+	size: 50,
+	image: 'Open_PacMan.jpg',
+    moveRight : function() {
+		this.clear();
+        this.posX += cellSize;
+		if(this.posX > canvas.width - border - this.size)
+			this.posX = canvas.width - border - this.size;
+		this.draw();
+    },
+    moveLeft : function() {
+		this.clear();
+        this.posX -= cellSize;
+		if(this.posX < border)
+			this.posX = border;
+		this.draw();
+    },
+    moveUp : function() {
+		this.clear();
+		this.posY -= cellSize;
+		if(this.posY < border)
+			this.posY = border;
+		this.draw();
+    },
+    moveDown : function() {
+		this.clear();
+		this.posY += cellSize;
+		if(this.posY > canvas.height - border - this.size)
+			this.posY = canvas.height - border - this.size;
+		this.draw();
+    },
+	clear: function(){
+		ctx.fillStyle = canvasColor;
+		ctx.fillRect(this.posX,this.posY,this.size,this.size);
+	},
+	draw : function(){
+		base_image = new Image();
+		base_image.src = this.image;
+		ctx.drawImage(base_image, this.posX, this.posY, this.size, this.size);
+	}
+};
+
+
+$(document).keydown(function(e){
+    switch(e.which){
+		case 38:
+			if(pacman.image.indexOf("_Up") == -1){
+				pacman.image = "Open_PacMan_Up.jpg";
+			}else if(pacman.image.indexOf("Open_") == -1){
+				pacman.image = "Open_PacMan_Up.jpg";
+			}else{
+				pacman.image = "Closed_PacMan_Up.jpg";
+			}
+			
+			pacman.moveUp();
+			break;
+		case 39:
+			if(pacman.image.indexOf("_Right") == -1){
+				pacman.image = "Open_PacMan_Right.jpg";
+			}else if(pacman.image.indexOf("Open_") == -1){
+				pacman.image = "Open_PacMan_Right.jpg";
+			}else{
+				pacman.image = "Closed_PacMan_Right.jpg";
+			}
+			
+			pacman.moveRight();
+			break;
+		case 37:
+			if(pacman.image.indexOf("_Left") == -1){
+				pacman.image = "Open_PacMan_Left.jpg";
+			}else if(pacman.image.indexOf("Open_") == -1){
+				pacman.image = "Open_PacMan_Left.jpg";
+			}else{
+				pacman.image = "Closed_PacMan_Left.jpg";
+			}
+			
+			pacman.moveLeft();
+			break;
+		case 40:
+			if(pacman.image.indexOf("_Down") == -1){
+				pacman.image = "Open_PacMan_Down.jpg";
+			}else if(pacman.image.indexOf("Open_") == -1){
+				pacman.image = "Open_PacMan_Down.jpg";
+			}else{
+				pacman.image = "Closed_PacMan_Down.jpg";
+			}
+			
+			pacman.moveDown();
+			break;
+	}
+});
+
+function drawBorders(){
+	ctx.fillRect(0,0,canvas.width,border);
+	ctx.fillRect(0,canvas.height - border,canvas.width,border);
+	ctx.fillRect(0,0,border,canvas.width);
+	ctx.fillRect(canvas.width - border,0,border,canvas.height);
+}
+
+function drawGrid(){
+	// Grid the area
+	for(i=cellSize+border;i<canvas.width;i+=cellSize){
+		ctx.moveTo(i,0);
+		ctx.lineTo(i,canvas.width);
+	}
+	for(i=cellSize+border;i<canvas.height;i+=cellSize){
+		ctx.moveTo(0,i);
+		ctx.lineTo(canvas.width,i);
+	}
+	ctx.stroke();
+}
+
+
+drawBorders();
+//drawGrid();
+
+pacman.image = 'Open_PacMan.jpg';
+
+base_image = new Image();
+base_image.src = 'Open_PacMan_Right.jpg';
+base_image.onload = function(){
+	ctx.drawImage(base_image, border, border, pacman.size, pacman.size);
+}
+base_image2 = new Image();
+base_image2.src = 'Closed_PacMan_Right.jpg';
+base_image2.onload = function(){
+	ctx.drawImage(base_image2, border, border, pacman.size, pacman.size);
+}
+base_image3 = new Image();
+base_image3.src = 'Open_PacMan_Up.jpg';
+base_image3.onload = function(){
+	ctx.drawImage(base_image3, border, border, pacman.size, pacman.size);
+}
+base_image4 = new Image();
+base_image4.src = 'Closed_PacMan_Up.jpg';
+base_image4.onload = function(){
+	ctx.drawImage(base_image4, border, border, pacman.size, pacman.size);
+}
+base_image5 = new Image();
+base_image5.src = 'Open_PacMan_Left.jpg';
+base_image5.onload = function(){
+	ctx.drawImage(base_image5, border, border, pacman.size, pacman.size);
+}
+base_image6 = new Image();
+base_image6.src = 'Closed_PacMan_Left.jpg';
+base_image6.onload = function(){
+	ctx.drawImage(base_image6, border, border, pacman.size, pacman.size);
+}
+base_image7 = new Image();
+base_image7.src = 'Open_PacMan_Down.jpg';
+base_image7.onload = function(){
+	ctx.drawImage(base_image7, border, border, pacman.size, pacman.size);
+}
+base_image8 = new Image();
+base_image8.src = 'Closed_PacMan_Down.jpg';
+base_image8.onload = function(){
+	ctx.drawImage(base_image8, border, border, pacman.size, pacman.size);
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
